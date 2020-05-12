@@ -5,6 +5,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home"
 import ExternalApi from "./views/ExternalApi";
+import NewPost from "./components/NewPost"
 
 import { Router, Route, Switch } from "react-router-dom";
 import Profile from "./components/Profile";
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" exact component={Home} />
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/external-api" component={ExternalApi} />
+          <PrivateRoute path="/posts/new" component={NewPost} />
         </Switch>
       </Router>
     </div>
