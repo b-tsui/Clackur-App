@@ -1,37 +1,38 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import React, { useState } from "react";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    },
-    input: {
-        display: 'none',
-    },
-}));
+import Dropzone from "react-dropzone";
 
-export default function NewPost() {
-    const classes = useStyles();
+export default function App() {
+    const [fileNames, setFileNames] = useState([]);
+    const [imageUrls, setImageUrls] = useState([])
+    const handleDrop = acceptedFiles => {
+        setFileNames(acceptedFiles.map(file => file.name));
+        setImageUrls(acceptedFiles.map(file => URL.createObjectURL(file)))
+    }
 
     return (
-        <div className={classes.root}>
-            <input
-                accept="image/*"
-                className={classes.input}
-                id="contained-button-file"
-                multiple
-                type="file"
-            />
-            <label htmlFor="contained-button-file">
-                <Button variant="contained" color="primary" component="span">
-                    Upload Photo
-                </Button>
-            </label>
+        <div className="App">
+            <Dropzone onDrop={handleDrop}>
+                {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps({ className: "dropzone" })}>
+                        <input {...getInputProps()} />
+                        <p>Drag'n'drop files, or click to select files</p>
+                    </div>
+                )}
+            </Dropzone>
+            <div>
+                <strong>Files:</strong>
+                <ul>
+                    {fileNames.map(fileName => (
+                        <li key={fileName}>{fileName}</li>
+                    ))}
+                </ul>
+                <div>Preview:</div>
+                {imageUrls.map(imageUrl => (
+                    <img key={imageUrl} src={imageUrl} />
+                ))}
+
+            </div>
         </div>
     );
 }
