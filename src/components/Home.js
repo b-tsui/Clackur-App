@@ -10,7 +10,6 @@ const Home = () => {
     useEffect(() => {
         const loadPosts = async () => {
             try {
-                //const token = await getTokenSilently();
                 const res = await fetch('http://localhost:3001/posts')
                 const { posts } = await res.json();
                 setPosts(posts)
@@ -19,7 +18,7 @@ const Home = () => {
             }
         }
         loadPosts();
-    }, [getTokenSilently])
+    }, [])
     console.log(posts)
 
     if (!user) {

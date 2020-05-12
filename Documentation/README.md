@@ -9,4 +9,3 @@
    * Users are able to upload images
    * Images are uploaded and stored to aws
    * Image links are stored the post table on local db
- * 
