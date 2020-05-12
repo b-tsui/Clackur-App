@@ -35,7 +35,22 @@ export const Auth0Provider = ({
 
             if (isAuthenticated) {
                 const user = await auth0FromHook.getUser();
-                setUser(user);
+                let token = await auth0FromHook.getTokenSilently();
+                const res = await fetch(`http://localhost:3001/users/login`, {
+                    method: "PATCH",
+                    body: JSON.stringify({ name: user.nickname, email: user.email }),
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    }
+                })
+                //fetch path on user on the backend
+                const response = await res.json();
+                if (response.newUser) {
+                    setUser({ ...user, userId: response.newUser.id });
+                } else {
+                    setUser({ ...user, userId: response.user.id })
+                }
             }
 
             setLoading(false);
