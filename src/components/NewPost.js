@@ -8,6 +8,7 @@ import { useAuth0 } from "../react-auth0-spa";
 
 const useStyles = makeStyles((theme) => ({
     root: {
+
         '& > *': {
             margin: theme.spacing(1),
             width: '25ch',
@@ -64,7 +65,24 @@ export default function App() {
         })
         const imageResData = await imageRes.json()
 
-
+        const postRes = await fetch('http://localhost:3001/posts/new', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                categoryId: 1,
+                userId: user.userId,
+                title: postTitle,
+                description: postDescription,
+                imageUrl: imageResData.imageUrl,
+                public: true
+            })
+        });
+        if (postRes.ok) {
+            window.location.href = '/'
+        }
 
     }
 
