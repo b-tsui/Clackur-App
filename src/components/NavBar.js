@@ -5,23 +5,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
 import '../styles/navbar-styles.css'
 
 import { useAuth0 } from "../react-auth0-spa";
 import { Link } from "react-router-dom";
 
-const myTheme = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#7986cb',
-        },
-        secondary: {
-            main: '#64b5f6',
-        },
-    },
-})
 
 const useStyles = makeStyles((theme) => ({
     root: {

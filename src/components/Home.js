@@ -7,7 +7,7 @@ import '../styles/home-page.css'
 const Home = () => {
     const [posts, setPosts] = useState([]);
 
-    const { loading, user, getTokenSilently } = useAuth0();
+    const { user } = useAuth0();
 
     useEffect(() => {
         const loadPosts = async () => {
@@ -21,10 +21,9 @@ const Home = () => {
         }
         loadPosts();
     }, [])
-    console.log(posts)
 
     if (!user) {
-        return <div className="posts-container">{posts.map((post) => <SinglePost post={post} />)}</div>
+        return <div className="posts-container">{posts.map((post) => <SinglePost post={post} key={post.id} />)}</div>
 
     } else {
 
@@ -32,7 +31,7 @@ const Home = () => {
             <>
                 {/* <div>{JSON.stringify(user)}</div> */}
                 <div className="home-welcome">Welcome, {user.name}</div>
-                <div className="posts-container">{posts.map((post) => <SinglePost post={post} />)}</div>
+                <div className="posts-container">{posts.map((post) => <SinglePost post={post} key={post.id} />)}</div>
             </>
         );
     }

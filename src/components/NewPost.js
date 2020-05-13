@@ -31,7 +31,7 @@ export default function App() {
     //for material ui
     const classes = useStyles();
 
-
+    //adds dragndropped photo to image data and sets vars for image preview
     const handleDrop = async (acceptedFiles) => {
 
         imageData.current.append(`file`, acceptedFiles[0]);
@@ -42,15 +42,17 @@ export default function App() {
 
     }
 
+    //updates state with form field values as they're being typed
     const handleFormTitle = (e) => setPostTitle(e.target.value);
     const handleFormDescription = (e) => setPostDescription(e.target.value);
 
+    /**/
     const handlePostSubmit = async (e) => {
         e.preventDefault();
 
         //makes sure a photo was uploaded
         if (imageUrls.length === 0) {
-            alert('please upload a photo')
+            alert('please upload a photo');
             return;
         }
 
@@ -63,8 +65,8 @@ export default function App() {
                 Authorization: `Bearer ${token}`
             },
             body: imageData.current
-        })
-        const imageResData = await imageRes.json()
+        });
+        const imageResData = await imageRes.json();
 
         const postRes = await fetch('http://localhost:3001/posts/new', {
             method: "POST",
@@ -125,7 +127,7 @@ export default function App() {
                     </ul>
                     <div>Preview:</div>
                     {imageUrls.map(imageUrl => (
-                        <img key={imageUrl} src={imageUrl} />
+                        <img alt={postTitle} key={imageUrl} src={imageUrl} />
                     ))}
                 </div>
                 <Button type="submit" variant="contained" color="primary">

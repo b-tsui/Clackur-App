@@ -36,6 +36,7 @@ export const Auth0Provider = ({
             if (isAuthenticated) {
                 const user = await auth0FromHook.getUser();
                 let token = await auth0FromHook.getTokenSilently();
+                debugger;
                 const res = await fetch(`http://localhost:3001/users/login`, {
                     method: "PATCH",
                     body: JSON.stringify({ name: user.nickname, email: user.email }),
