@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useAuth0 } from "../react-auth0-spa"
 import SinglePost from "./SinglePost"
 
+import '../styles/home-page.css'
+
 const Home = () => {
     const [posts, setPosts] = useState([]);
 

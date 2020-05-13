@@ -1,39 +1,27 @@
-// src/components/NavBar.js
-
-// import React from "react";
-// import { useAuth0 } from "../react-auth0-spa";
-// import { Link } from "react-router-dom";
-
-// const NavBar = () => {
-//     const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
-
-//     return (
-//         <div>
-//             {!isAuthenticated && (
-//                 <button onClick={() => loginWithRedirect({})}>Log in</button>
-//             )}
-//             {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
-//             {isAuthenticated && (
-//                 <span>
-//                     <Link to="/">Home</Link>
-//                     <Link to="/profile">Profile</Link>
-//                     <Link to="/external-api">External API</Link>
-//                 </span>
-//             )}
-//         </div>
-//     );
-// };
 
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles'
+
+import '../styles/navbar-styles.css'
+
 import { useAuth0 } from "../react-auth0-spa";
 import { Link } from "react-router-dom";
+
+const myTheme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#7986cb',
+        },
+        secondary: {
+            main: '#64b5f6',
+        },
+    },
+})
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -53,17 +41,21 @@ export default function NavBar() {
 
     return (
         <div className={classes.root}>
+
             <AppBar position="static">
                 <Toolbar>
                     {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon />
                     </IconButton> */}
                     <Typography variant="h6" className={classes.title}>
-                        <Link to='/'><Button>Clackur</ Button></Link>
+                        <a href="/">Clackur</a>
                     </Typography>
                     {isAuthenticated && (
                         <>
-                            <Link to="/posts/new"><Button>New Post</Button></Link>
+                            <Link to='/'>
+                                <Button>Home</ Button>
+                            </Link>
+                            <Link to="/posts/new" ><Button>New Post</Button></Link>
                             <Link to="/profile"><Button>Profile</Button></Link>
                             {/* <Link to="/external-api">External API</Link> */}
                         </>
@@ -73,9 +65,8 @@ export default function NavBar() {
                     )}
                     {isAuthenticated && <Button onClick={() => logout()}>Log out</Button>}
                 </Toolbar>
-
-
             </AppBar>
+
         </div>
     );
 }

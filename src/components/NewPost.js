@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { FormControl } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -21,14 +20,16 @@ export default function App() {
     const [imageUrls, setImageUrls] = useState([]);
     const [postTitle, setPostTitle] = useState('');
     const [postDescription, setPostDescription] = useState('')
+
+    //keeps image data from uploaded image current
+    //must use .current to get the current state var
     const imageData = useRef(new FormData());
+
     //gets token geterator and user info from Auth0
     const { user, getTokenSilently } = useAuth0();
 
     //for material ui
     const classes = useStyles();
-
-    //stores image upload data
 
 
     const handleDrop = async (acceptedFiles) => {
@@ -36,7 +37,7 @@ export default function App() {
         imageData.current.append(`file`, acceptedFiles[0]);
 
         setFileNames(acceptedFiles.map(file => file.name));
-        //sets temp image for photo preview
+        //sets temp image url in state for photo preview
         setImageUrls(acceptedFiles.map(file => URL.createObjectURL(file)));
 
     }
@@ -103,11 +104,15 @@ export default function App() {
                     onChange={handleFormDescription}
                     required
                 />
+
+                /
+                {/* dropzone component comes from react-dropzone
+                and allows client to drag/drop or upload an image to post */}
                 <Dropzone onDrop={handleDrop} accept="image/*" >
                     {({ getRootProps, getInputProps }) => (
                         <div {...getRootProps({ className: "dropzone" })}>
                             <input {...getInputProps()} />
-                            <p>Drag'n'drop image, or click to select image</p>
+                            <p>Drag/drop image, or click to select image</p>
                         </div>
                     )}
                 </Dropzone>
