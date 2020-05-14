@@ -25,10 +25,6 @@ export default function SinglePost({ post }) {
     const { user, getTokenSilently } = useAuth0()
     const classes = useStyles();
 
-
-    useEffect(() => {
-    })
-
     const upVoteHandler = async (e) => {
         if (user) {
             const token = await getTokenSilently();
