@@ -116,7 +116,7 @@ export default function SinglePostDetails({ location }) {
                 <CardHeader
                     avatar={
                         <Avatar aria-label="recipe" className={classes.avatar}>
-                            R
+                            {postData.User.name.slice(0, 2)}
                         </Avatar>
                     }
                     action={
@@ -124,10 +124,14 @@ export default function SinglePostDetails({ location }) {
                             <MoreVertIcon />
                         </IconButton>
                     }
-                    title={postData.title}
+                    title={
+                        <Typography variant="h5" component="h2">
+                            {postData.title}
+                        </Typography>
+                    }
                     subheader={
                         <>
-                            <div>by </div>
+                            <div>by {postData.User.name}</div>
                             <div>{Date(postData.createdAt)}</div>
                         </>
                     }
