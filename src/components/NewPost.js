@@ -34,7 +34,7 @@ export default function App() {
     //adds dragndropped photo to image data and sets vars for image preview
     const handleDrop = async (acceptedFiles) => {
 
-        imageData.current.append(`file`, acceptedFiles[0]);
+        imageData.current.set(`file`, acceptedFiles[0]);
 
         setFileNames(acceptedFiles.map(file => file.name));
         //sets temp image url in state for photo preview

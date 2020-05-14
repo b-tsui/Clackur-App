@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import ExternalApi from "./views/ExternalApi";
 import NewPost from "./components/NewPost";
+import SinglePostDetails from "./components/SinglePostDetails"
 
 import { Router, Route, Switch } from "react-router-dom";
 import Profile from "./components/Profile";
@@ -39,7 +40,8 @@ function App() {
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/external-api" component={ExternalApi} />
-            <PrivateRoute path="/posts/new" component={NewPost} />
+            <PrivateRoute exact path="/posts/new" component={NewPost} />
+            <Route path="/posts/:id" component={SinglePostDetails} />
           </Switch>
         </Router>
       </div>

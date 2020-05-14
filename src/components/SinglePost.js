@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "../react-auth0-spa"
+// import singlePostDetails from "./SinglePostDetails"
+import { Link } from "react-router-dom"
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -11,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import SinglePostDetails from './SinglePostDetails';
 
 const useStyles = makeStyles({
     root: {
@@ -79,24 +82,30 @@ export default function SinglePost({ post }) {
 
     return (
         <Card className={classes.root} style={{ margin: '10px' }}>
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    alt={post.title}
-                    height="180"
-                    image={post.imageUrl}
-                    title={post.title}
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        {post.title}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {post.description}
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
+            <Link to={{
+                pathname: `/posts/${post.id}`,
+                post
+            }} >
+                <CardActionArea >
+                    <CardMedia
+                        component="img"
+                        alt={post.title}
+                        height="180"
+                        image={post.imageUrl}
+                        title={post.title}
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                            {post.title}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            {post.description}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Link>
             <CardActions>
+
                 <IconButton onClick={upVoteHandler}>
                     <KeyboardArrowUpIcon />
                     <Typography variant="subtitle1">{upvotes}</Typography>
@@ -106,6 +115,6 @@ export default function SinglePost({ post }) {
                     <Typography variant="subtitle1">{-1 * downvotes}</Typography>
                 </IconButton>
             </CardActions>
-        </Card>
+        </Card >
     );
 }
