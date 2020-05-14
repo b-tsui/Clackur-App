@@ -107,7 +107,7 @@ export default function App() {
                     required
                 />
 
-                /
+
                 {/* dropzone component comes from react-dropzone
                 and allows client to drag/drop or upload an image to post */}
                 <Dropzone onDrop={handleDrop} accept="image/*" >

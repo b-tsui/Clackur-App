@@ -2,3 +2,9 @@ a:-webkit-any-link{
     color: rgba(0, 0, 0, 0.87);
     text-decoration: none;
 }
+
+#navbar-logo{
+    display:flex;
+    align-items: center;
+    letter-spacing: 2px;
+}

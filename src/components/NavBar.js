@@ -31,14 +31,16 @@ export default function NavBar() {
 
     return (
         <div className={classes.root}>
-
             <AppBar position="static">
                 <Toolbar>
-                    {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <MenuIcon />
-                    </IconButton> */}
                     <Typography variant="h6" className={classes.title}>
-                        <a href="/">Clackur</a>
+                        <a href="/" id="navbar-logo">
+                            <img alt="clackur logo"
+                                src="https://clackurbucket.s3.us-east-2.amazonaws.com/1589425451302"
+                                height="40"
+                                width="40"
+                            />&nbsp;lackur
+                        </a>
                     </Typography>
                     {isAuthenticated && (
                         <>

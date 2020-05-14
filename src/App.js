@@ -10,14 +10,18 @@ import Profile from "./components/Profile";
 import history from "./utils/history";
 
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from "@material-ui/core/CssBaseline";
 const myTheme = createMuiTheme({
   palette: {
     primary: {
-      main: '#7986cb',
+      main: '#9B9EBA',
     },
     secondary: {
       main: '#64b5f6',
     },
+    background: {
+      default: "#DEE2FF"
+    }
   },
 })
 
@@ -25,8 +29,8 @@ const myTheme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={myTheme}>
+      <CssBaseline />
       <div className="App">
-        {/* Don't forget to include the history module */}
         <Router history={history}>
           <header>
             <NavBar />

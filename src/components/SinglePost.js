@@ -78,7 +78,7 @@ export default function SinglePost({ post }) {
     }
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} style={{ margin: '10px' }}>
             <CardActionArea>
                 <CardMedia
                     component="img"
