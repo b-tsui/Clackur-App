@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuth0 } from "../react-auth0-spa"
+import '../styles/post-details.css'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -106,16 +107,17 @@ export default function SinglePostDetails({ location }) {
             return;
         }
     }
-
-
+    if (!postData.User) {
+        return <div>loading</div>
+    }
     return (
-        <div id="single-post-detail-car-container">
+        <div id="single-post-detail-card-container">
             < Card className={classes.root} >
                 <CardHeader
                     avatar={
                         <Avatar aria-label="recipe" className={classes.avatar}>
                             R
-          </Avatar>
+                        </Avatar>
                     }
                     action={
                         <IconButton aria-label="settings">
@@ -123,7 +125,12 @@ export default function SinglePostDetails({ location }) {
                         </IconButton>
                     }
                     title={postData.title}
-                    subheader="September 14, 2016"
+                    subheader={
+                        <>
+                            <div>by </div>
+                            <div>{Date(postData.createdAt)}</div>
+                        </>
+                    }
                 />
                 <CardMedia
                     component="img"

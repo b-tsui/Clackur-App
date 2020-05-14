@@ -3,16 +3,22 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Dropzone from "react-dropzone";
+import Paper from '@material-ui/core/Paper';
 import { useAuth0 } from "../react-auth0-spa";
+import '../styles/new-post-page.css'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-
         '& > *': {
             margin: theme.spacing(1),
-            width: '25ch',
+            minWidth: 400,
+            width: '60vw',
+            background: '#FAF5FB'
         },
     },
+    form: {
+        width: '60vw'
+    }
 }));
 
 export default function App() {
@@ -90,50 +96,52 @@ export default function App() {
     }
 
     return (
-        <div className="new-post-form-container" onSubmit={handlePostSubmit} >
-            <form className={classes.root} autoComplete="off">
-                <TextField id="new-post-title"
-                    label="Add a Title"
-                    variant="outlined"
-                    value={postTitle}
-                    onChange={handleFormTitle}
-                    required
-                />
-                <TextField id="new-post-description"
-                    label="Add a Description"
-                    variant="outlined"
-                    value={postDescription}
-                    onChange={handleFormDescription}
-                    required
-                />
+        <div id="new-post-form-container" onSubmit={handlePostSubmit} >
+            <Paper>
+                <form className={`${classes.root} new-post-form`} autoComplete="off">
+                    <TextField id="new-post-title"
+                        label="Add a Title"
+                        variant="outlined"
+                        value={postTitle}
+                        onChange={handleFormTitle}
+                        required
+                    />
+                    <TextField id="new-post-description"
+                        label="Add a Description"
+                        variant="outlined"
+                        value={postDescription}
+                        onChange={handleFormDescription}
+                        required
+                    />
 
 
-                {/* dropzone component comes from react-dropzone
+                    {/* dropzone component comes from react-dropzone
                 and allows client to drag/drop or upload an image to post */}
-                <Dropzone onDrop={handleDrop} accept="image/*" >
-                    {({ getRootProps, getInputProps }) => (
-                        <div {...getRootProps({ className: "dropzone" })}>
-                            <input {...getInputProps()} />
-                            <p>Drag/drop image, or click to select image</p>
-                        </div>
-                    )}
-                </Dropzone>
-                <div>
-                    <strong>Files:</strong>
-                    <ul>
-                        {fileNames.map(fileName => (
-                            <li key={fileName}>{fileName}</li>
-                        ))}
-                    </ul>
-                    <div>Preview:</div>
-                    {imageUrls.map(imageUrl => (
-                        <img alt={postTitle} key={imageUrl} src={imageUrl} />
+                    <Paper className="drop-zone">
+                        <Dropzone onDrop={handleDrop} accept="image/*" >
+                            {({ getRootProps, getInputProps }) => (
+                                <div {...getRootProps({ className: "dropzone" })}>
+                                    <input {...getInputProps()} />
+                                    <p style={{ padding: "10px" }} >Drag/drop image, or click to select image</p>
+                                </div>
+                            )}
+                        </Dropzone>
+                    </Paper>
+                    <div>
+                        File: {fileNames.map(fileName => (
+                        <li key={fileName}>{fileName}</li>
                     ))}
-                </div>
-                <Button type="submit" variant="contained" color="primary">
-                    Post
+
+                        <div>Preview:</div>
+                        {imageUrls.map(imageUrl => (
+                            <img alt={postTitle} key={imageUrl} src={imageUrl} width="100%" />
+                        ))}
+                    </div>
+                    <Button type="submit" variant="contained" color="primary">
+                        Post
                 </Button>
-            </form>
+                </form>
+            </Paper>
         </div >
     );
 }

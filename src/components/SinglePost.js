@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "../react-auth0-spa"
-// import singlePostDetails from "./SinglePostDetails"
 import { Link } from "react-router-dom"
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,11 +12,12 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import SinglePostDetails from './SinglePostDetails';
+
 
 const useStyles = makeStyles({
     root: {
         maxWidth: 345,
+        background: '#FAF5FB'
     },
 });
 
@@ -95,17 +95,16 @@ export default function SinglePost({ post }) {
                         title={post.title}
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
+                        <Typography variant="h5" component="h2">
                             {post.title}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
+                        {/* <Typography variant="body2" color="textSecondary" component="p">
                             {post.description}
-                        </Typography>
+                        </Typography> */}
                     </CardContent>
                 </CardActionArea>
             </Link>
             <CardActions>
-
                 <IconButton onClick={upVoteHandler}>
                     <KeyboardArrowUpIcon />
                     <Typography variant="subtitle1">{upvotes}</Typography>
