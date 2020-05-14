@@ -19,25 +19,67 @@ const useStyles = makeStyles({
 });
 
 export default function SinglePost({ post }) {
-    const [upvotes, setUpvotes] = useState(0);
-    const [downvotes, setDownvotes] = useState(0)
+    const [upvotes, setUpvotes] = useState(post.Votes.filter(vote => vote.upVote).length);
+    const [downvotes, setDownvotes] = useState(post.Votes.filter(vote => vote.downVote).length);
 
     const { user, getTokenSilently } = useAuth0()
     const classes = useStyles();
 
-    let numUpvotes = (post.Votes.filter(vote => vote.upVote));
-    let numDownvotes = (post.Votes.filter(vote => vote.downVote));
+
     useEffect(() => {
     })
 
-    const upVoteHandler = (e) => {
-
+    const upVoteHandler = async (e) => {
+        if (user) {
+            const token = await getTokenSilently();
+            let res = await fetch(`http://localhost:3001/posts/${post.id}/upvote`, {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ userId: user.userId })
+            });
+            //sets local state so front end displays the votes dynamically
+            if (res.status === 204) {
+                setUpvotes(upvotes - 1);
+            }
+            if (res.status === 201) {
+                setUpvotes(upvotes + 1);
+            }
+            if (res.status === 206) {
+                setUpvotes(upvotes + 1);
+                setDownvotes(downvotes - 1);
+            }
+        } else {
+            return;
+        }
     }
-
-    const downVoteHandler = (e) => {
-
+    const downVoteHandler = async (e) => {
+        if (user) {
+            const token = await getTokenSilently();
+            let res = await fetch(`http://localhost:3001/posts/${post.id}/downvote`, {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ userId: user.userId })
+            });
+            if (res.status === 204) {
+                setDownvotes(downvotes - 1);
+            }
+            if (res.status === 201) {
+                setDownvotes(downvotes + 1);
+            }
+            if (res.status === 206) {
+                setDownvotes(downvotes + 1);
+                setUpvotes(upvotes - 1);
+            }
+        } else {
+            return;
+        }
     }
-
 
     return (
         <Card className={classes.root}>
@@ -59,13 +101,13 @@ export default function SinglePost({ post }) {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <IconButton>
+                <IconButton onClick={upVoteHandler}>
                     <KeyboardArrowUpIcon />
-                    <Typography variant="subtitle1">{numUpvotes.length}</Typography>
+                    <Typography variant="subtitle1">{upvotes}</Typography>
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={downVoteHandler}>
                     <KeyboardArrowDownIcon />
-                    <Typography variant="subtitle1">{numDownvotes.length}</Typography>
+                    <Typography variant="subtitle1">{-1 * downvotes}</Typography>
                 </IconButton>
             </CardActions>
         </Card>
