@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth0 } from "../react-auth0-spa"
 import { Link } from "react-router-dom"
+import { api } from "../config"
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -31,7 +32,7 @@ export default function SinglePost({ post }) {
     const upVoteHandler = async (e) => {
         if (user) {
             const token = await getTokenSilently();
-            let res = await fetch(`https://clackur-backend.herokuapp.com/posts/${post.id}/upvote`, {
+            let res = await fetch(`${api}/posts/${post.id}/upvote`, {
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -57,7 +58,7 @@ export default function SinglePost({ post }) {
     const downVoteHandler = async (e) => {
         if (user) {
             const token = await getTokenSilently();
-            let res = await fetch(`https://clackur-backend.herokuapp.com/posts/${post.id}/downvote`, {
+            let res = await fetch(`${api}/posts/${post.id}/downvote`, {
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${token}`,

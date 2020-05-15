@@ -6,6 +6,7 @@ import Dropzone from "react-dropzone";
 import Paper from '@material-ui/core/Paper';
 import { useAuth0 } from "../react-auth0-spa";
 import '../styles/new-post-page.css'
+import { api } from "../config"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -65,7 +66,7 @@ export default function App() {
         //gets token for authentication
         const token = await getTokenSilently();
         //uploads image to aws and receives image url
-        const imageRes = await fetch('https://clackur-backend.herokuapp.com/posts/image/upload', {
+        const imageRes = await fetch(`${api}/posts/image/upload`, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`
@@ -74,7 +75,7 @@ export default function App() {
         });
         const imageResData = await imageRes.json();
 
-        const postRes = await fetch('https://clackur-backend.herokuapp.com/posts/new', {
+        const postRes = await fetch(`${api}/posts/new`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

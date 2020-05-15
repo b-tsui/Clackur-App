@@ -1,7 +1,7 @@
-// src/views/ExternalApi.js
-
 import React, { useState } from "react";
 import { useAuth0 } from "../react-auth0-spa";
+import { api } from "../config"
+
 
 const ExternalApi = () => {
     const [showResult, setShowResult] = useState(false);
@@ -12,7 +12,7 @@ const ExternalApi = () => {
         try {
             const token = await getTokenSilently();
 
-            const response = await fetch("https://clackur-backend.herokuapp.com/api/external", {
+            const response = await fetch(`${api}/api/external`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

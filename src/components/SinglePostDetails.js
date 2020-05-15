@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "../react-auth0-spa"
 import '../styles/post-details.css'
+import { api } from "../config"
+
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -45,7 +47,7 @@ export default function SinglePostDetails({ location }) {
     useEffect(() => {
         const getPostDetails = async () => {
             //fetch post @ location.pathname
-            const postDetailsRes = await fetch(`https://clackur-backend.herokuapp.com${location.pathname}`)
+            const postDetailsRes = await fetch(`${api}${location.pathname}`)
             const { post } = await postDetailsRes.json();
             //postData.current = post;
             setPostData(post)
@@ -59,7 +61,7 @@ export default function SinglePostDetails({ location }) {
     const upVoteHandler = async (e) => {
         if (user) {
             const token = await getTokenSilently();
-            let res = await fetch(`https://clackur-backend.herokuapp.com/posts/${postData.id}/upvote`, {
+            let res = await fetch(`${api}/posts/${postData.id}/upvote`, {
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -85,7 +87,7 @@ export default function SinglePostDetails({ location }) {
     const downVoteHandler = async (e) => {
         if (user) {
             const token = await getTokenSilently();
-            let res = await fetch(`https://clackur-backend.herokuapp.com/posts/${postData.id}/downvote`, {
+            let res = await fetch(`${api}/posts/${postData.id}/downvote`, {
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${token}`,

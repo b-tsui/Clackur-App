@@ -3,6 +3,7 @@ import { useAuth0 } from "../react-auth0-spa"
 import SinglePost from "./SinglePost"
 import '../styles/home-page.css'
 import Loading from "./Loading"
+import { api } from "../config"
 
 const Home = () => {
     const [posts, setPosts] = useState([]);
@@ -12,11 +13,11 @@ const Home = () => {
     useEffect(() => {
         setTimeout(() => {
             setLoaded(true)
-        }, 3500)
+        }, 2500)
 
         const loadPosts = async () => {
             try {
-                const res = await fetch(`https://clackur-backend.herokuapp.com/posts`)
+                const res = await fetch(`${api}/posts`)
                 const { posts } = await res.json();
                 setPosts(posts)
             } catch (error) {

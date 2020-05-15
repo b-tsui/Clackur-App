@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useAuth0 } from "../react-auth0-spa";
 import SinglePost from "./SinglePost"
 import '../styles/user-info.css'
+import { api } from "../config"
 
 const Profile = () => {
     const [posts, setPosts] = useState([]);
@@ -11,7 +12,7 @@ const Profile = () => {
         if (user) {
             const loadPosts = async () => {
                 try {
-                    const res = await fetch(`https://clackur-backend.herokuapp.com/posts/user/${user.userId}`)
+                    const res = await fetch(`${api}/posts/user/${user.userId}`)
                     const { posts } = await res.json();
                     setPosts(posts)
                 } catch (error) {

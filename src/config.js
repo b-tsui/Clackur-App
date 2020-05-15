@@ -1,1 +1,1 @@
-export const api = process.env.NODE_ENV === 'development' ? 'localhost:3001' : 'https://clackur-backend.herokuapp.com'
+export const api = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://clackur-backend.herokuapp.com'
