@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useAuth0 } from "../react-auth0-spa"
 import SinglePost from "./SinglePost"
-
+import Loading from "./Loading"
 import '../styles/home-page.css'
 
 const Home = () => {
     const [posts, setPosts] = useState([]);
 
-    const { user } = useAuth0();
+    const { user, loading } = useAuth0();
 
     useEffect(() => {
         const loadPosts = async () => {
@@ -26,7 +26,9 @@ const Home = () => {
         return <div className="posts-container">{posts.map((post) => <SinglePost post={post} key={post.id} />)}</div>
 
     } else {
-
+        if (loading) {
+            return <div>loading here</div>
+        }
         return (
             <>
                 {/* <div>{JSON.stringify(user)}</div> */}

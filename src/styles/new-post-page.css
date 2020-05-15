@@ -21,3 +21,8 @@
 .drop-zone{
     background-color: #FAF5FB;
 }
+input:focus, 
+textarea:focus, 
+select:focus{
+    outline: none;
+}
