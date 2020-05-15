@@ -4,6 +4,7 @@ import SinglePost from "./SinglePost"
 import Loading from "./Loading"
 import '../styles/home-page.css'
 
+
 const Home = () => {
     const [posts, setPosts] = useState([]);
 
@@ -12,7 +13,7 @@ const Home = () => {
     useEffect(() => {
         const loadPosts = async () => {
             try {
-                const res = await fetch('http://localhost:3001/posts')
+                const res = await fetch(`https://clackur-backend.herokuapp.com/posts`)
                 const { posts } = await res.json();
                 setPosts(posts)
             } catch (error) {
@@ -27,7 +28,7 @@ const Home = () => {
 
     } else {
         if (loading) {
-            return <div>loading here</div>
+            return <Loading />
         }
         return (
             <>

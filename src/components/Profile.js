@@ -11,7 +11,7 @@ const Profile = () => {
         if (user) {
             const loadPosts = async () => {
                 try {
-                    const res = await fetch(`http://localhost:3001/posts/user/${user.userId}`)
+                    const res = await fetch(`https://clackur-backend.herokuapp.com/posts/user/${user.userId}`)
                     const { posts } = await res.json();
                     setPosts(posts)
                 } catch (error) {

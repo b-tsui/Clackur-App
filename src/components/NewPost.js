@@ -65,7 +65,7 @@ export default function App() {
         //gets token for authentication
         const token = await getTokenSilently();
         //uploads image to aws and receives image url
-        const imageRes = await fetch('http://localhost:3001/posts/image/upload', {
+        const imageRes = await fetch('https://clackur-backend.herokuapp.com/posts/image/upload', {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`
@@ -74,7 +74,7 @@ export default function App() {
         });
         const imageResData = await imageRes.json();
 
-        const postRes = await fetch('http://localhost:3001/posts/new', {
+        const postRes = await fetch('https://clackur-backend.herokuapp.com/posts/new', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

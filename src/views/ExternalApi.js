@@ -12,7 +12,7 @@ const ExternalApi = () => {
         try {
             const token = await getTokenSilently();
 
-            const response = await fetch("http://localhost:3001/api/external", {
+            const response = await fetch("https://clackur-backend.herokuapp.com/api/external", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import createAuth0Client from "@auth0/auth0-spa-js";
 
+
 const DEFAULT_REDIRECT_CALLBACK = () =>
     window.history.replaceState({}, document.title, window.location.pathname);
 
@@ -36,7 +37,7 @@ export const Auth0Provider = ({
             if (isAuthenticated) {
                 const user = await auth0FromHook.getUser();
                 let token = await auth0FromHook.getTokenSilently();
-                const res = await fetch(`http://localhost:3001/users/login`, {
+                const res = await fetch(`https://clackur-backend.herokuapp.com/users/login`, {
                     method: "PATCH",
                     body: JSON.stringify({ name: user.nickname, email: user.email }),
                     headers: {
