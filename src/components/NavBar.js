@@ -34,13 +34,15 @@ export default function NavBar() {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" className={classes.title}>
-                        <a href="/" id="navbar-logo">
-                            <img alt="clackur logo"
-                                src="https://clackurbucket.s3.us-east-2.amazonaws.com/1589431160842"
-                                height="40"
-                                width="40"
-                            />&nbsp;lackur
-                        </a>
+                        <div>
+                            <a href="/" id="navbar-logo">
+                                <img alt="clackur logo"
+                                    src="https://clackurbucket.s3.us-east-2.amazonaws.com/1589431160842"
+                                    height="40"
+                                    width="40"
+                                />&nbsp;lackur
+                            </a>
+                        </div>
                     </Typography>
                     {isAuthenticated && (
                         <>
@@ -59,6 +61,6 @@ export default function NavBar() {
                 </Toolbar>
             </AppBar>
 
-        </div>
+        </div >
     );
 }

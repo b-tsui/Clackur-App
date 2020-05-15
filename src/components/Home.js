@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useAuth0 } from "../react-auth0-spa"
 import SinglePost from "./SinglePost"
-import Loading from "./Loading"
 import '../styles/home-page.css'
-
+import Loading from "./Loading"
 
 const Home = () => {
     const [posts, setPosts] = useState([]);
-
-    const { user, loading } = useAuth0();
+    const [loaded, setLoaded] = useState(false);
+    const { user } = useAuth0();
 
     useEffect(() => {
+
         const loadPosts = async () => {
+            setTimeout(() => {
+                setLoaded(true)
+            }, 3000)
             try {
                 const res = await fetch(`https://clackur-backend.herokuapp.com/posts`)
                 const { posts } = await res.json();
@@ -21,20 +24,33 @@ const Home = () => {
             }
         }
         loadPosts();
+
     }, [])
 
     if (!user) {
-        return <div className="posts-container">{posts.map((post) => <SinglePost post={post} key={post.id} />)}</div>
-
-    } else {
-        if (loading) {
-            return <Loading />
-        }
         return (
             <>
-                {/* <div>{JSON.stringify(user)}</div> */}
-                <div className="home-welcome">Welcome, {user.name}</div>
-                <div className="posts-container">{posts.map((post) => <SinglePost post={post} key={post.id} />)}</div>
+                {!loaded &&
+                    <Loading />
+                }
+                {loaded &&
+                    <>
+                        < div className="posts-container" >
+                            {posts.map((post) => <SinglePost post={post} key={post.id} />)}
+                        </div >
+                    </>
+                }
+            </>
+        )
+
+    } else {
+
+        return (
+            <>
+                <>
+                    <div className="home-welcome">Welcome, {user.name}</div>
+                    <div className="posts-container">{posts.map((post) => <SinglePost post={post} key={post.id} />)}</div>
+                </>
             </>
         );
     }

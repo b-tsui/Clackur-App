@@ -7,4 +7,5 @@ a:-webkit-any-link{
     display:flex;
     align-items: center;
     letter-spacing: 2px;
+    width: 130px;
 }
