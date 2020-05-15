@@ -13,7 +13,7 @@ const Home = () => {
     useEffect(() => {
         setTimeout(() => {
             setLoaded(true)
-        }, 2500)
+        }, 2000)
 
         const loadPosts = async () => {
             try {
@@ -53,8 +53,10 @@ const Home = () => {
                 }
                 {loaded &&
                     <>
-                        <div className="home-welcome">Welcome, {user.name}</div>
-                        <div className="posts-container">{posts.map((post) => <SinglePost post={post} key={post.id} />)}</div>
+                        <h1 className="home-welcome">Welcome, {user.name}</h1>
+                        <div className="posts-container">
+                            {posts.map((post) => <SinglePost post={post} key={post.id} />)}
+                        </div>
                     </>
                 }
             </>

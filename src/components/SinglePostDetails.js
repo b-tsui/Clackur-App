@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "../react-auth0-spa"
 import '../styles/post-details.css'
 import { api } from "../config"
-
+import Loading from "./Loading"
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -110,7 +110,7 @@ export default function SinglePostDetails({ location }) {
         }
     }
     if (!postData.User) {
-        return <div>loading</div>
+        return <Loading />
     }
     return (
         <div id="single-post-detail-card-container">
