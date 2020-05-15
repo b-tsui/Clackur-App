@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth0 } from "../react-auth0-spa"
 import { Link } from "react-router-dom"
 import { api } from "../config"
+import Loading from "./Loading"
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -25,6 +26,7 @@ const useStyles = makeStyles({
 export default function SinglePost({ post }) {
     const [upvotes, setUpvotes] = useState(post.Votes.filter(vote => vote.upVote).length);
     const [downvotes, setDownvotes] = useState(post.Votes.filter(vote => vote.downVote).length);
+    const [loaded, setLoaded] = useState(false)
 
     const { user, getTokenSilently } = useAuth0()
     const classes = useStyles();
@@ -80,6 +82,11 @@ export default function SinglePost({ post }) {
             return;
         }
     }
+    const handleLoad = () => {
+        setTimeout(() => {
+            setLoaded(true)
+        }, 100)
+    }
 
     return (
         <Card className={classes.root} style={{ margin: '10px' }}>
@@ -88,12 +95,22 @@ export default function SinglePost({ post }) {
                 post
             }} >
                 <CardActionArea >
-                    <CardMedia
+                    {/* <CardMedia
                         component="img"
                         alt={post.title}
                         height="180"
                         image={post.imageUrl}
                         title={post.title}
+                    /> */}
+                    <img
+                        //style={loaded ? {} : { display: "none" }}
+                        component="img"
+                        alt={post.title}
+                        height="250"
+                        //src={post.imageUrl}
+                        src={loaded ? post.imageUrl : 'https://deskthority.net/wiki/images/2/25/Mx_clear_illustration.gif'}
+                        title={post.title}
+                        onLoad={handleLoad}
                     />
                     <CardContent>
                         <Typography variant="h5" component="h2">
