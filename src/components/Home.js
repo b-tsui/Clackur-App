@@ -10,11 +10,11 @@ const Home = () => {
     const { user } = useAuth0();
 
     useEffect(() => {
+        setTimeout(() => {
+            setLoaded(true)
+        }, 3500)
 
         const loadPosts = async () => {
-            setTimeout(() => {
-                setLoaded(true)
-            }, 3000)
             try {
                 const res = await fetch(`https://clackur-backend.herokuapp.com/posts`)
                 const { posts } = await res.json();
@@ -47,10 +47,15 @@ const Home = () => {
 
         return (
             <>
-                <>
-                    <div className="home-welcome">Welcome, {user.name}</div>
-                    <div className="posts-container">{posts.map((post) => <SinglePost post={post} key={post.id} />)}</div>
-                </>
+                {!loaded &&
+                    <Loading />
+                }
+                {loaded &&
+                    <>
+                        <div className="home-welcome">Welcome, {user.name}</div>
+                        <div className="posts-container">{posts.map((post) => <SinglePost post={post} key={post.id} />)}</div>
+                    </>
+                }
             </>
         );
     }
