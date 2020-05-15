@@ -85,7 +85,7 @@ export default function SinglePost({ post }) {
     const handleLoad = () => {
         setTimeout(() => {
             setLoaded(true)
-        }, 100)
+        }, 1150)
     }
 
     return (
