@@ -157,7 +157,6 @@ export default function SinglePostDetails({ location }) {
     //posts comment
     const handleCommentEnter = async (e) => {
         if (e.key === "Enter") {
-
             const token = await getTokenSilently();
             const commentRes = await fetch(`${api}${location.pathname}/comments/new`, {
                 method: "POST",
@@ -171,8 +170,9 @@ export default function SinglePostDetails({ location }) {
             })
             if (commentRes.ok) {
                 setTypedComment('');
-                const newComment = await commentRes.json();
-                console.log(newComment)
+                let { newComment } = await commentRes.json();
+                newComment = { ...newComment, "User": { "id": user.userId, "email": user.email, "name": user.name } }
+                setComments([...comments, newComment])
             }
         }
     }
@@ -220,10 +220,12 @@ export default function SinglePostDetails({ location }) {
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
+                    {/* upvote button that also displays #of upvotes */}
                     <IconButton onClick={upVoteHandler}>
                         <KeyboardArrowUpIcon />
                         <Typography variant="subtitle1">{upvotes}</Typography>
                     </IconButton>
+                    {/* downvote button that also displays #of downvotes */}
                     <IconButton onClick={downVoteHandler}>
                         <KeyboardArrowDownIcon />
                         <Typography variant="subtitle1">{-1 * downvotes}</Typography>
@@ -244,11 +246,12 @@ export default function SinglePostDetails({ location }) {
                     <CardContent>
                         <Typography paragraph>Comments:</Typography>
                         <List >
+                            {/* created comment component for each comment */}
                             {comments.map((comment) => <SingleComment comment={comment} key={comment.id} />)}
                             {user && <div className="comment-input-container">
                                 <Avatar aria-label="user avatar" className={classes.commentAvatar}>
                                     {/* turns first two letters of users name to avatar */}
-                                    {user.name.slice(0, 2)}
+                                    {user.nickname.slice(0, 2)}
                                 </Avatar>
                                 <TextField
                                     color='secondary'
