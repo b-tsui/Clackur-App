@@ -68,6 +68,7 @@ export default function SinglePost({ post }) {
                 },
                 body: JSON.stringify({ userId: user.userId })
             });
+            //sets local state so front end displays the votes dynamically
             if (res.status === 204) {
                 setDownvotes(downvotes - 1);
             }
@@ -83,6 +84,7 @@ export default function SinglePost({ post }) {
         }
     }
     const handleLoad = () => {
+        //timeout to make the placeholder image last a little longer and look smoother
         setTimeout(() => {
             setLoaded(true)
         }, 1150)
@@ -95,30 +97,22 @@ export default function SinglePost({ post }) {
                 post
             }} >
                 <CardActionArea >
-                    {/* <CardMedia
-                        component="img"
-                        alt={post.title}
-                        height="180"
-                        image={post.imageUrl}
-                        title={post.title}
-                    /> */}
                     <img
                         //style={loaded ? {} : { display: "none" }}
                         component="img"
                         alt={post.title}
                         height="250"
                         //src={post.imageUrl}
+                        //displays placeholder gif while actuall images load
                         src={loaded ? post.imageUrl : 'https://deskthority.net/wiki/images/2/25/Mx_clear_illustration.gif'}
                         title={post.title}
+                        //sets loaded to true after timeout
                         onLoad={handleLoad}
                     />
                     <CardContent>
                         <Typography variant="h5" component="h2">
                             {post.title}
                         </Typography>
-                        {/* <Typography variant="body2" color="textSecondary" component="p">
-                            {post.description}
-                        </Typography> */}
                     </CardContent>
                 </CardActionArea>
             </Link>

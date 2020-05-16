@@ -29,7 +29,7 @@ const Profile = () => {
     return (
         <Fragment>
             <div className="user-info-container">
-                <img src={user.picture} alt="Profile" style={{ 'border-radius': '50%' }} />
+                <img src={user.picture} alt="Profile" width="120" height="120" style={{ 'border-radius': '50%' }} />
                 <h3>{user.name}</h3>
                 <h1>My Posts</h1>
                 {/* <p>{user.email}</p> */}
