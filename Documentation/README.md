@@ -1,4 +1,5 @@
 # Clackur Feature List
+
 1. Users
    * User registration/login using Auth0
    * Profiles/Profile photo that appears in navbar when logged in
@@ -22,5 +23,3 @@
    * If user is logged in displays welcome message
    * If user is not logged in, displays welcome message with demo info
    * If use is logged in, also displays profile, and new posts in the navbar
-  
-

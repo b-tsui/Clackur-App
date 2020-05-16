@@ -17,3 +17,7 @@
   * Displays User Avatar
   * Displays User info
   * Displays User posts
+*  '/posts/new' (New Post)
+  * Form to create a new post
+  * Drag/drop feature to upload image
+  * Shows image preview after using chooses 
