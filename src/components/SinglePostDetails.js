@@ -171,7 +171,7 @@ export default function SinglePostDetails({ location }) {
             if (commentRes.ok) {
                 setTypedComment('');
                 let { newComment } = await commentRes.json();
-                newComment = { ...newComment, "User": { "id": user.userId, "email": user.email, "name": user.name } }
+                newComment = { ...newComment, "User": { "id": user.userId, "email": user.email, "name": user.nickname } }
                 setComments([...comments, newComment])
             }
         }
