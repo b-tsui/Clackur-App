@@ -5,3 +5,9 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+.comment-input-container{
+    display: flex;
+    align-items: flex-end;
+    padding: 16px 16px 0px 16px;
+}

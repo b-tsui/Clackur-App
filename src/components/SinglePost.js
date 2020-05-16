@@ -3,6 +3,7 @@ import { useAuth0 } from "../react-auth0-spa"
 import { Link } from "react-router-dom"
 import { api } from "../config"
 
+
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -13,18 +14,23 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: 345,
         background: '#FAF5FB',
     },
+    media: {
+        height: 0,
+        paddingTop: '56.25%', // 16:9
+    },
 
-});
+}));
 
 export default function SinglePost({ post }) {
     const [upvotes, setUpvotes] = useState(post.Votes.filter(vote => vote.upVote).length);
     const [downvotes, setDownvotes] = useState(post.Votes.filter(vote => vote.downVote).length);
     const [loaded, setLoaded] = useState(false)
+
 
     const { user, getTokenSilently } = useAuth0()
     const classes = useStyles();
@@ -88,6 +94,7 @@ export default function SinglePost({ post }) {
             setLoaded(true)
         }, 1150)
     }
+
 
     return (
         <Card className={classes.root} style={{ margin: '10px' }}>

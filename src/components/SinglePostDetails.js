@@ -3,7 +3,9 @@ import { useAuth0 } from "../react-auth0-spa"
 import '../styles/post-details.css'
 import { api } from "../config"
 import Loading from "./Loading"
+import SingleComment from "./SingleComment"
 
+import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -16,6 +18,10 @@ import Typography from '@material-ui/core/Typography';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
+import TextField from '@material-ui/core/TextField';
+import clsx from 'clsx';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +38,25 @@ const useStyles = makeStyles((theme) => ({
         color: '#212121',
         height: 60,
         width: 60
-
+    },
+    commentAvatar: {
+        color: '#212121',
+        height: 30,
+        width: 30,
+        marginRight: 26
+    },
+    expand: {
+        transform: 'rotate(0deg)',
+        marginLeft: 'auto',
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.shortest,
+        }),
+    },
+    expandOpen: {
+        transform: 'rotate(180deg)',
+    },
+    margin: {
+        margin: theme.spacing(1),
     },
 }));
 
@@ -41,11 +65,27 @@ export default function SinglePostDetails({ location }) {
     const [postData, setPostData] = useState({})
     const [upvotes, setUpvotes] = useState(0);
     const [downvotes, setDownvotes] = useState(0);
+    const [comments, setComments] = useState([])
+    const [expanded, setExpanded] = React.useState(false);
+    const [typedComment, setTypedComment] = useState('')
 
+    useEffect(() => {
+        const loadComments = async () => {
+            const postCommentsRes = await fetch(`${api}${location.pathname}/comments`)
+            const { comments } = await postCommentsRes.json();
+            setComments(comments)
+        }
+        loadComments();
+    }, [location.pathname])
 
     const classes = useStyles();
     const { user, getTokenSilently } = useAuth0()
 
+    //For expanding comments
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
+    //gets post details
     useEffect(() => {
         const getPostDetails = async () => {
             //fetch post @ location.pathname
@@ -59,7 +99,7 @@ export default function SinglePostDetails({ location }) {
         getPostDetails();
     }, [location.pathname]);
 
-
+    //handles upvoting
     const upVoteHandler = async (e) => {
         if (user) {
             const token = await getTokenSilently();
@@ -86,6 +126,7 @@ export default function SinglePostDetails({ location }) {
             return;
         }
     }
+    //handles downvoting
     const downVoteHandler = async (e) => {
         if (user) {
             const token = await getTokenSilently();
@@ -111,6 +152,31 @@ export default function SinglePostDetails({ location }) {
             return;
         }
     }
+
+    const handleCommentInput = (e) => setTypedComment(e.target.value)
+    //posts comment
+    const handleCommentEnter = async (e) => {
+        if (e.key === "Enter") {
+
+            const token = await getTokenSilently();
+            const commentRes = await fetch(`${api}${location.pathname}/comments/new`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    comment: typedComment
+                })
+            })
+            if (commentRes.ok) {
+                setTypedComment('');
+                const newComment = await commentRes.json();
+                console.log(newComment)
+            }
+        }
+    }
+
     if (!postData.User) {
         return <Loading />
     }
@@ -119,7 +185,8 @@ export default function SinglePostDetails({ location }) {
             < Card className={classes.root} >
                 <CardHeader
                     avatar={
-                        <Avatar aria-label="user name" className={classes.avatar}>
+                        <Avatar aria-label="user avatar" className={classes.avatar}>
+                            {/* turns first two letters of users name to avatar */}
                             {postData.User.name.slice(0, 2)}
                         </Avatar>
                     }
@@ -161,8 +228,41 @@ export default function SinglePostDetails({ location }) {
                         <KeyboardArrowDownIcon />
                         <Typography variant="subtitle1">{-1 * downvotes}</Typography>
                     </IconButton>
+                    Comments
+                    <IconButton
+                        className={clsx(classes.expand, {
+                            [classes.expandOpen]: expanded,
+                        })}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                    >
+                        <ExpandMoreIcon />
+                    </IconButton>
                 </CardActions>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                        <Typography paragraph>Comments:</Typography>
+                        <List >
+                            {comments.map((comment) => <SingleComment comment={comment} key={comment.id} />)}
+                            {user && <div className="comment-input-container">
+                                <Avatar aria-label="user avatar" className={classes.commentAvatar}>
+                                    {/* turns first two letters of users name to avatar */}
+                                    {user.name.slice(0, 2)}
+                                </Avatar>
+                                <TextField
+                                    color='secondary'
+                                    label='Add a comment!'
+                                    style={{ width: '100%' }}
+                                    onChange={handleCommentInput}
+                                    onKeyPress={handleCommentEnter}
+                                    value={typedComment}
+                                />
+                            </div>}
+                        </List>
+                    </CardContent>
+                </Collapse>
             </Card >
-        </div>
+        </div >
     );
 }

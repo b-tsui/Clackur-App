@@ -33,7 +33,7 @@ export default function App() {
     const imageData = useRef(new FormData());
 
     //gets token geterator and user info from Auth0
-    const { user, getTokenSilently } = useAuth0();
+    const { getTokenSilently } = useAuth0();
 
     //for material ui
     const classes = useStyles();

@@ -16,13 +16,11 @@ const Home = () => {
         }, 2000)
 
         const loadPosts = async () => {
-            try {
-                const res = await fetch(`${api}/posts`)
-                const { posts } = await res.json();
-                setPosts(posts)
-            } catch (error) {
-                console.error(error);
-            }
+
+            const res = await fetch(`${api}/posts`)
+            const { posts } = await res.json();
+            setPosts(posts)
+
         }
         loadPosts();
 
