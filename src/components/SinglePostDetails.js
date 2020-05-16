@@ -13,7 +13,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
@@ -30,7 +29,10 @@ const useStyles = makeStyles((theme) => ({
     },
 
     avatar: {
-        backgroundColor: red[500],
+        color: '#212121',
+        height: 60,
+        width: 60
+
     },
 }));
 
@@ -117,7 +119,7 @@ export default function SinglePostDetails({ location }) {
             < Card className={classes.root} >
                 <CardHeader
                     avatar={
-                        <Avatar aria-label="recipe" className={classes.avatar}>
+                        <Avatar aria-label="user name" className={classes.avatar}>
                             {postData.User.name.slice(0, 2)}
                         </Avatar>
                     }

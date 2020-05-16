@@ -82,8 +82,6 @@ export default function App() {
                 Authorization: `Bearer ${token}`
             },
             body: JSON.stringify({
-                categoryId: 1,
-                userId: user.userId,
                 title: postTitle,
                 description: postDescription,
                 imageUrl: imageResData.imageUrl,

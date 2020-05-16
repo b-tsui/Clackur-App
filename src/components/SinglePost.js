@@ -2,14 +2,11 @@ import React, { useState } from 'react';
 import { useAuth0 } from "../react-auth0-spa"
 import { Link } from "react-router-dom"
 import { api } from "../config"
-import Loading from "./Loading"
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
@@ -19,8 +16,9 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 const useStyles = makeStyles({
     root: {
         maxWidth: 345,
-        background: '#FAF5FB'
+        background: '#FAF5FB',
     },
+
 });
 
 export default function SinglePost({ post }) {
@@ -34,6 +32,7 @@ export default function SinglePost({ post }) {
     const upVoteHandler = async (e) => {
         if (user) {
             const token = await getTokenSilently();
+            debugger
             let res = await fetch(`${api}/posts/${post.id}/upvote`, {
                 method: "PATCH",
                 headers: {
@@ -109,19 +108,19 @@ export default function SinglePost({ post }) {
                         //sets loaded to true after timeout
                         onLoad={handleLoad}
                     />
-                    <CardContent>
-                        <Typography variant="h5" component="h2">
+                    <div style={{ margin: '5px 12px 0px' }}>
+                        <div style={{ fontSize: '1.1rem' }}>
                             {post.title}
-                        </Typography>
-                    </CardContent>
+                        </div>
+                    </div>
                 </CardActionArea>
             </Link>
-            <CardActions>
-                <IconButton onClick={upVoteHandler}>
+            <CardActions style={{ padding: '3px' }}>
+                <IconButton onClick={upVoteHandler} style={{ padding: '5px' }}>
                     <KeyboardArrowUpIcon />
                     <Typography variant="subtitle1">{upvotes}</Typography>
                 </IconButton>
-                <IconButton onClick={downVoteHandler}>
+                <IconButton onClick={downVoteHandler} style={{ padding: '5px' }}>
                     <KeyboardArrowDownIcon />
                     <Typography variant="subtitle1">{-1 * downvotes}</Typography>
                 </IconButton>
