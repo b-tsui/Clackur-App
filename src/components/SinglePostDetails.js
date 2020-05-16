@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+//location passed in comes from default props passed in
 export default function SinglePostDetails({ location }) {
 
     const [postData, setPostData] = useState({})
@@ -171,7 +172,17 @@ export default function SinglePostDetails({ location }) {
             if (commentRes.ok) {
                 setTypedComment('');
                 let { newComment } = await commentRes.json();
-                newComment = { ...newComment, "User": { "id": user.userId, "email": user.email, "name": user.nickname } }
+
+                /*creates a new comment object to add to comment array to 
+                render new comment dynamically for client*/
+                newComment = {
+                    ...newComment,
+                    "User": {
+                        "id": user.userId,
+                        "email": user.email,
+                        "name": user.nickname
+                    }
+                }
                 setComments([...comments, newComment])
             }
         }
