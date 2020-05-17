@@ -4,6 +4,7 @@ import '../styles/post-details.css'
 import { api } from "../config"
 import Loading from "./Loading"
 import SingleComment from "./SingleComment"
+import SinglePostDetailsOptions from "./SinglePostDetailsOptions"
 
 import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,7 +16,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardHideIcon from '@material-ui/icons/KeyboardHide';
@@ -204,9 +204,7 @@ export default function SinglePostDetails({ location }) {
                         </Avatar>
                     }
                     action={
-                        <IconButton aria-label="settings">
-                            <MoreVertIcon />
-                        </IconButton>
+                        <SinglePostDetailsOptions />
                     }
                     title={
                         <Typography variant="h5" component="h2">

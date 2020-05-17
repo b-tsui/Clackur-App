@@ -2,7 +2,6 @@ import React from "react";
 import PrivateRoute from "./components/PrivateRoute";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
-import ExternalApi from "./views/ExternalApi";
 import NewPost from "./components/NewPost";
 import SinglePostDetails from "./components/SinglePostDetails"
 
@@ -39,7 +38,6 @@ function App() {
           <Switch>
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/profile" component={Profile} />
-            <PrivateRoute path="/external-api" component={ExternalApi} />
             <PrivateRoute exact path="/posts/new" component={NewPost} />
             <Route path="/posts/:id" component={SinglePostDetails} />
           </Switch>
