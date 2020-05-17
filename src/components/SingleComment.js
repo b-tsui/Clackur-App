@@ -1,13 +1,11 @@
 import React from 'react'
 
-
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,17 +39,9 @@ export default function SingleComment({ comment }) {
                 <ListItemText
                     primary={comment.comment}
                     secondary={
-                        <React.Fragment>
-                            {/* <Typography
-                                component="span"
-                                variant="body2"
-                                className={classes.inline}
-                                color="textPrimary"
-                            >
-                                :{comment.User.name}
-                            </Typography> */}
+                        <>
                             by <strong>{comment.User.name}</strong> - {Date(comment.createdAt)}
-                        </React.Fragment>
+                        </>
                     }
                 />
             </ListItem>

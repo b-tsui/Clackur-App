@@ -18,6 +18,8 @@ import Typography from '@material-ui/core/Typography';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardHideIcon from '@material-ui/icons/KeyboardHide';
+import CommentIcon from '@material-ui/icons/Comment';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import TextField from '@material-ui/core/TextField';
@@ -241,7 +243,6 @@ export default function SinglePostDetails({ location }) {
                         <KeyboardArrowDownIcon />
                         <Typography variant="subtitle1">{-1 * downvotes}</Typography>
                     </IconButton>
-                    Comments
                     <IconButton
                         className={clsx(classes.expand, {
                             [classes.expandOpen]: expanded,
@@ -250,7 +251,7 @@ export default function SinglePostDetails({ location }) {
                         aria-expanded={expanded}
                         aria-label="show more"
                     >
-                        <ExpandMoreIcon />
+                        <CommentIcon />
                     </IconButton>
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
@@ -259,20 +260,36 @@ export default function SinglePostDetails({ location }) {
                         <List >
                             {/* created comment component for each comment */}
                             {comments.map((comment) => <SingleComment comment={comment} key={comment.id} />)}
-                            {user && <div className="comment-input-container">
-                                <Avatar aria-label="user avatar" className={classes.commentAvatar}>
-                                    {/* turns first two letters of users name to avatar */}
-                                    {user.nickname.slice(0, 2)}
-                                </Avatar>
-                                <TextField
-                                    color='secondary'
-                                    label='Add a comment!'
-                                    style={{ width: '100%' }}
-                                    onChange={handleCommentInput}
-                                    onKeyPress={handleCommentEnter}
-                                    value={typedComment}
-                                />
-                            </div>}
+                            {/* displays comment input if user is logged in */}
+                            {user &&
+                                <div className="comment-input-container">
+                                    <Avatar aria-label="user avatar" className={classes.commentAvatar}>
+                                        {/* turns first two letters of users name to avatar */}
+                                        {user.nickname.slice(0, 2)}
+                                    </Avatar>
+                                    <TextField
+                                        color='secondary'
+                                        label='Add a comment!'
+                                        style={{ width: '100%' }}
+                                        onChange={handleCommentInput}
+                                        onKeyPress={handleCommentEnter}
+                                        value={typedComment}
+                                    />
+                                </div>
+                            }
+                            {!user &&
+                                <div className="comment-input-container">
+                                    <Avatar aria-label="user avatar" className={classes.commentAvatar}>
+                                        ?
+                                    </Avatar>
+                                    <TextField
+                                        disabled id="standard-disabled"
+                                        label="Disabled"
+                                        style={{ width: '100%' }}
+                                        defaultValue="Log in to add a comment!"
+                                    />
+                                </div>
+                            }
                         </List>
                     </CardContent>
                 </Collapse>

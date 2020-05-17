@@ -9,5 +9,5 @@
 .comment-input-container{
     display: flex;
     align-items: flex-end;
-    padding: 16px 16px 0px 16px;
+    padding: 16px 0px 0px 16px;
 }

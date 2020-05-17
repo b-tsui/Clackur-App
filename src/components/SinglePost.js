@@ -38,7 +38,7 @@ export default function SinglePost({ post }) {
     const upVoteHandler = async (e) => {
         if (user) {
             const token = await getTokenSilently();
-            debugger
+
             let res = await fetch(`${api}/posts/${post.id}/upvote`, {
                 method: "PATCH",
                 headers: {
