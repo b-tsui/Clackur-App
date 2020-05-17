@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth0 } from "../react-auth0-spa"
+import { api } from "../config"
 
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -12,6 +14,7 @@ import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is requir
 import PropTypes from 'prop-types';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+//below code is material ui code for modals
 const useStyles = makeStyles((theme) => ({
     modal: {
         display: 'flex',
@@ -56,6 +59,7 @@ Fade.propTypes = {
     onEnter: PropTypes.func,
     onExited: PropTypes.func,
 };
+//above is material ui code for modals
 
 
 export default function SinglePostDetailsOptions({ location }) {
@@ -64,26 +68,42 @@ export default function SinglePostDetailsOptions({ location }) {
     const [open, setOpen] = useState(false);
     const menuOpen = Boolean(anchorEl);
 
+    const { getTokenSilently } = useAuth0();
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
     const handleCloseMenu = () => {
         setAnchorEl(null);
-        setOpen(true);
+
     };
 
-    // const handleOpen = () => {
-    //     setOpen(true);
-    // };
+    const handleOpen = () => {
+        setOpen(true);
+    };
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    const handlePostDelete = async => {
 
+    const handlePostDelete = async () => {
+        const token = await getTokenSilently();
+
+        const deletePostRes = await fetch(`${api}${location.pathname}/delete`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        if (deletePostRes.ok) {
+            window.location.href = '/'
+        } else {
+            alert("oops! looks like you're not the owner of this post")
+        }
     }
+
 
     return (
         <div>
@@ -99,7 +119,7 @@ export default function SinglePostDetailsOptions({ location }) {
                 onClose={handleCloseMenu}
                 TransitionComponent={Fade}
             >
-                <MenuItem onClick={handleCloseMenu}>Delete Post</MenuItem>
+                <MenuItem onClick={handleOpen}>Delete Post</MenuItem>
                 <Modal
                     aria-labelledby="spring-modal-title"
                     aria-describedby="spring-modal-description"

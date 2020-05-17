@@ -204,7 +204,7 @@ export default function SinglePostDetails({ location }) {
                         </Avatar>
                     }
                     action={
-                        <SinglePostDetailsOptions />
+                        <SinglePostDetailsOptions location={location} />
                     }
                     title={
                         <Typography variant="h5" component="h2">

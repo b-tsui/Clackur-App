@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import { useAuth0 } from "../react-auth0-spa";
 import '../styles/new-post-page.css'
 import { api } from "../config"
+import { Redirect } from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -96,7 +97,7 @@ export default function App() {
 
     return (
         <div id="new-post-form-container" onSubmit={handlePostSubmit} >
-            <Paper>
+            < Paper >
                 <form className={`${classes.root} new-post-form`} autoComplete="off">
                     <TextField id="new-post-title"
                         label="Add a Title"
@@ -140,7 +141,7 @@ export default function App() {
                         Post
                 </Button>
                 </form>
-            </Paper>
+            </Paper >
         </div >
     );
 }

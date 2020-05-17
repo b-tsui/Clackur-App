@@ -40,7 +40,7 @@ const Home = () => {
                             <div>To demo, login with email: <strong>demo@demo.com</strong> password: <strong>aA1!demo</strong> or you can signup with any email or google account! </div>
                         </div>
                         < div className="posts-container" >
-                            {posts.map((post) => <SinglePost post={post} key={post.id} />)}
+                            {loaded && posts.map((post) => <SinglePost post={post} key={post.id} />)}
                         </div >
                     </>
                 }
