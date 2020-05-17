@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAuth0 } from "../react-auth0-spa"
 import '../styles/post-details.css'
 import { api } from "../config"
@@ -68,10 +68,17 @@ export default function SinglePostDetails({ location }) {
     const [postData, setPostData] = useState({})
     const [upvotes, setUpvotes] = useState(0);
     const [downvotes, setDownvotes] = useState(0);
+    const [upvoted, setUpvoted] = useState(false);
+    const [downvoted, setDownvoted] = useState(false);
     const [comments, setComments] = useState([])
     const [expanded, setExpanded] = React.useState(false);
     const [typedComment, setTypedComment] = useState('')
+    const postD = useRef({})
 
+    const classes = useStyles();
+    const { user, getTokenSilently } = useAuth0()
+
+    //gets comment info
     useEffect(() => {
         const loadComments = async () => {
             const postCommentsRes = await fetch(`${api}${location.pathname}/comments`)
@@ -81,26 +88,39 @@ export default function SinglePostDetails({ location }) {
         loadComments();
     }, [location.pathname])
 
-    const classes = useStyles();
-    const { user, getTokenSilently } = useAuth0()
-
-    //For expanding comments
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
     //gets post details
     useEffect(() => {
         const getPostDetails = async () => {
             //fetch post @ location.pathname
             const postDetailsRes = await fetch(`${api}${location.pathname}`)
             const { post } = await postDetailsRes.json();
-            //postData.current = post;
+            postD.current = post;
             setPostData(post)
             setUpvotes(post.Votes.filter(vote => vote.upVote).length)
             setDownvotes(post.Votes.filter(vote => vote.downVote).length)
+            //sets clients vote state
+            if (user) {
+                postD.current.Votes.forEach(vote => {
+                    if (vote.userId === user.userId) {
+                        if (vote.upVote) {
+                            setUpvoted(true)
+                        } else if (vote.downVote) {
+                            setDownvoted(true)
+                        }
+                    }
+                })
+            }
         }
         getPostDetails();
     }, [location.pathname]);
+
+
+
+    //For expanding comments
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
+
 
     //handles upvoting
     const upVoteHandler = async (e) => {
@@ -117,13 +137,17 @@ export default function SinglePostDetails({ location }) {
             //sets local state so front end displays the votes dynamically
             if (res.status === 204) {
                 setUpvotes(upvotes - 1);
+                setUpvoted(false);
             }
             if (res.status === 201) {
                 setUpvotes(upvotes + 1);
+                setUpvoted(true);
             }
             if (res.status === 206) {
                 setUpvotes(upvotes + 1);
                 setDownvotes(downvotes - 1);
+                setUpvoted(true);
+                setDownvoted(false);
             }
         } else {
             return;
@@ -141,15 +165,20 @@ export default function SinglePostDetails({ location }) {
                 },
                 body: JSON.stringify({ userId: user.userId })
             });
+            //sets local state so front end displays the votes dynamically
             if (res.status === 204) {
                 setDownvotes(downvotes - 1);
+                setDownvoted(false);
             }
             if (res.status === 201) {
                 setDownvotes(downvotes + 1);
+                setDownvoted(true);
             }
             if (res.status === 206) {
                 setDownvotes(downvotes + 1);
                 setUpvotes(upvotes - 1);
+                setDownvoted(true);
+                setUpvoted(false);
             }
         } else {
             return;
@@ -231,16 +260,30 @@ export default function SinglePostDetails({ location }) {
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                    {/* upvote button that also displays #of upvotes */}
-                    <IconButton onClick={upVoteHandler}>
-                        <KeyboardArrowUpIcon />
-                        <Typography variant="subtitle1">{upvotes}</Typography>
-                    </IconButton>
-                    {/* downvote button that also displays #of downvotes */}
-                    <IconButton onClick={downVoteHandler}>
-                        <KeyboardArrowDownIcon />
-                        <Typography variant="subtitle1">{-1 * downvotes}</Typography>
-                    </IconButton>
+                    {upvoted &&
+                        <IconButton onClick={upVoteHandler} style={{ padding: '5px', color: 'rgb(0,0,255,.6)' }}>
+                            <KeyboardArrowUpIcon />
+                            <Typography variant="subtitle1">{upvotes}</Typography>
+                        </IconButton>
+                    }
+                    {!upvoted &&
+                        <IconButton onClick={upVoteHandler} style={{ padding: '5px' }}>
+                            <KeyboardArrowUpIcon />
+                            <Typography variant="subtitle1">{upvotes}</Typography>
+                        </IconButton>
+                    }
+                    {downvoted &&
+                        <IconButton onClick={downVoteHandler} style={{ padding: '5px', color: "rgb(255,0,0,.6)" }}>
+                            <KeyboardArrowDownIcon />
+                            <Typography variant="subtitle1">{-1 * downvotes}</Typography>
+                        </IconButton>
+                    }
+                    {!downvoted &&
+                        <IconButton onClick={downVoteHandler} style={{ padding: '5px' }}>
+                            <KeyboardArrowDownIcon />
+                            <Typography variant="subtitle1">{-1 * downvotes}</Typography>
+                        </IconButton>
+                    }
                     <IconButton
                         className={clsx(classes.expand, {
                             [classes.expandOpen]: expanded,

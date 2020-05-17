@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "../react-auth0-spa"
 import { Link } from "react-router-dom"
 import { api } from "../config"
 
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,10 +31,30 @@ export default function SinglePost({ post }) {
     const [upvotes, setUpvotes] = useState(post.Votes.filter(vote => vote.upVote).length);
     const [downvotes, setDownvotes] = useState(post.Votes.filter(vote => vote.downVote).length);
     const [loaded, setLoaded] = useState(false)
-
+    const [upvoted, setUpvoted] = useState(false);
+    const [downvoted, setDownvoted] = useState(false);
 
     const { user, getTokenSilently } = useAuth0()
     const classes = useStyles();
+
+    //sets clients vote state
+    useEffect(() => {
+        const getVotes = () => {
+            if (user) {
+                post.Votes.forEach(vote => {
+                    if (vote.userId === user.userId) {
+                        if (vote.upVote) {
+                            setUpvoted(true)
+                        } else if (vote.downVote) {
+                            setDownvoted(true)
+                        }
+
+                    }
+                })
+            }
+        }
+        getVotes();
+    }, [post.Votes, user])
 
     const upVoteHandler = async (e) => {
         if (user) {
@@ -50,18 +71,23 @@ export default function SinglePost({ post }) {
             //sets local state so front end displays the votes dynamically
             if (res.status === 204) {
                 setUpvotes(upvotes - 1);
+                setUpvoted(false);
             }
             if (res.status === 201) {
                 setUpvotes(upvotes + 1);
+                setUpvoted(true);
             }
             if (res.status === 206) {
                 setUpvotes(upvotes + 1);
                 setDownvotes(downvotes - 1);
+                setUpvoted(true);
+                setDownvoted(false);
             }
         } else {
             return;
         }
     }
+    //handles downvoting
     const downVoteHandler = async (e) => {
         if (user) {
             const token = await getTokenSilently();
@@ -76,13 +102,17 @@ export default function SinglePost({ post }) {
             //sets local state so front end displays the votes dynamically
             if (res.status === 204) {
                 setDownvotes(downvotes - 1);
+                setDownvoted(false);
             }
             if (res.status === 201) {
                 setDownvotes(downvotes + 1);
+                setDownvoted(true);
             }
             if (res.status === 206) {
                 setDownvotes(downvotes + 1);
                 setUpvotes(upvotes - 1);
+                setDownvoted(true);
+                setUpvoted(false);
             }
         } else {
             return;
@@ -123,14 +153,30 @@ export default function SinglePost({ post }) {
                 </CardActionArea>
             </Link>
             <CardActions style={{ padding: '3px' }}>
-                <IconButton onClick={upVoteHandler} style={{ padding: '5px' }}>
-                    <KeyboardArrowUpIcon />
-                    <Typography variant="subtitle1">{upvotes}</Typography>
-                </IconButton>
-                <IconButton onClick={downVoteHandler} style={{ padding: '5px' }}>
-                    <KeyboardArrowDownIcon />
-                    <Typography variant="subtitle1">{-1 * downvotes}</Typography>
-                </IconButton>
+                {upvoted &&
+                    <IconButton onClick={upVoteHandler} style={{ padding: '5px', color: 'rgb(0,0,255,.6)' }}>
+                        <KeyboardArrowUpIcon />
+                        <Typography variant="subtitle1">{upvotes}</Typography>
+                    </IconButton>
+                }
+                {!upvoted &&
+                    <IconButton onClick={upVoteHandler} style={{ padding: '5px' }}>
+                        <KeyboardArrowUpIcon />
+                        <Typography variant="subtitle1">{upvotes}</Typography>
+                    </IconButton>
+                }
+                {downvoted &&
+                    <IconButton onClick={downVoteHandler} style={{ padding: '5px', color: "rgb(255,0,0,.6)" }}>
+                        <KeyboardArrowDownIcon />
+                        <Typography variant="subtitle1">{-1 * downvotes}</Typography>
+                    </IconButton>
+                }
+                {!downvoted &&
+                    <IconButton onClick={downVoteHandler} style={{ padding: '5px' }}>
+                        <KeyboardArrowDownIcon />
+                        <Typography variant="subtitle1">{-1 * downvotes}</Typography>
+                    </IconButton>
+                }
             </CardActions>
         </Card >
     );
