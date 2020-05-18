@@ -18,9 +18,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardHideIcon from '@material-ui/icons/KeyboardHide';
 import CommentIcon from '@material-ui/icons/Comment';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import TextField from '@material-ui/core/TextField';
 import clsx from 'clsx';
@@ -118,7 +116,7 @@ export default function SinglePostDetails({ location }) {
             }
         }
         getPostDetails();
-    }, [location.pathname]);
+    }, [location.pathname, user]);
 
 
 

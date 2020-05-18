@@ -7,7 +7,6 @@ import Paper from '@material-ui/core/Paper';
 import { useAuth0 } from "../react-auth0-spa";
 import '../styles/new-post-page.css'
 import { api } from "../config"
-import { Redirect } from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
     root: {
