@@ -93,7 +93,12 @@ export default function SinglePostDetails({ location }) {
         const getPostDetails = async () => {
             //fetch post @ location.pathname
             const postDetailsRes = await fetch(`${api}${location.pathname}`)
+
+
             const { post } = await postDetailsRes.json();
+            if (!post) {
+                return (<div>rip</div>)
+            }
             postD.current = post;
             setPostData(post)
             setUpvotes(post.Votes.filter(vote => vote.upVote).length)
@@ -107,6 +112,7 @@ export default function SinglePostDetails({ location }) {
                         } else if (vote.downVote) {
                             setDownvoted(true)
                         }
+
                     }
                 })
             }
@@ -218,6 +224,9 @@ export default function SinglePostDetails({ location }) {
             }
         }
     }
+    // if (!postData) {
+    //     return <Loading />
+    // }
 
     if (!postData.User) {
         return <Loading />

@@ -102,6 +102,7 @@ export default function App() {
                     <TextField id="new-post-title"
                         label="Add a Title"
                         variant="outlined"
+                        color="secondary"
                         value={postTitle}
                         onChange={handleFormTitle}
                         required
@@ -110,6 +111,7 @@ export default function App() {
                         label="Add a Description"
                         variant="outlined"
                         value={postDescription}
+                        color="secondary"
                         onChange={handleFormDescription}
                         required
                     />
@@ -117,7 +119,7 @@ export default function App() {
 
                     {/* dropzone component comes from react-dropzone
                 and allows client to drag/drop or upload an image to post */}
-                    <Paper className="drop-zone">
+                    <Paper className="drop-zone" color="secondary">
                         <Dropzone onDrop={handleDrop} accept="image/*" >
                             {({ getRootProps, getInputProps }) => (
                                 <div {...getRootProps({ className: "dropzone" })}>

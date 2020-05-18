@@ -7,7 +7,7 @@ import { api } from "../config"
 const Profile = () => {
     const [posts, setPosts] = useState([]);
     const { loading, user } = useAuth0();
-
+    debugger;
     useEffect(() => {
         if (user) {
             const loadPosts = async () => {
