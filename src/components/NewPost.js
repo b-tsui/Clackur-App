@@ -114,8 +114,6 @@ export default function App() {
                         onChange={handleFormDescription}
                         required
                     />
-
-
                     {/* dropzone component comes from react-dropzone
                 and allows client to drag/drop or upload an image to post */}
                     <Paper className="drop-zone" color="secondary">
