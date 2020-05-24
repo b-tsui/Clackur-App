@@ -14,13 +14,26 @@
     justify-content: center;
     font-size: 16px;
     padding: 20px;
-    background-color: #FAF5FB;
+    background-color: #f8f8ff;
 
 }
 
 .drop-zone{
-    background-color: #FAF5FB;
+    background-color: #e0e0e0;
 }
+.dropzone-container{
+        border: dashed #9e9e9e;
+        border-radius: .2em;
+}
+.dropzone-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    padding-top: 10px;
+}
+
 input:focus, 
 textarea:focus, 
 select:focus{
