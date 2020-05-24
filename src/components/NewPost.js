@@ -118,27 +118,47 @@ export default function App() {
                 and allows client to drag/drop or upload an image to post */}
                     <Paper className="drop-zone" color="secondary">
                         <Dropzone onDrop={handleDrop} accept="image/*" >
-                            {({ getRootProps, getInputProps }) => (
-                                <div {...getRootProps({ className: "dropzone" })}>
-                                    <input {...getInputProps()} />
-                                    <p style={{ padding: "10px" }} >Drag/drop image, or click to select image</p>
-                                </div>
-                            )}
+                            {({ getRootProps,
+                                getInputProps,
+                                isDragActive,
+                                isDragAccept,
+                                isDragReject
+                            }) => {
+                                const additionalClass = isDragAccept
+                                    ? "accept"
+                                    : isDragReject
+                                        ? "reject"
+                                        : "";
+                                return (
+                                    <div
+                                        {...getRootProps({
+                                            className: `dropzone ${additionalClass}`
+                                        })}
+                                    >
+                                        <input {...getInputProps()} />
+                                        <div className="dropzone-text">
+                                            <span>{isDragActive ? "😀" : "🙃"}</span>
+                                            <p >Drag/drop image, or click to select image</p>
+                                        </div>
+                                        <div style={{ paddingLeft: "10px" }}>
+                                            File: {fileNames.map(fileName => (
+                                            <li key={fileName}>{fileName}</li>
+                                        ))}
+
+                                            <div>Preview:</div>
+                                            {imageUrls.map(imageUrl => (
+                                                <img alt={postTitle} key={imageUrl} src={imageUrl} width="100%" />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )
+                            }
+                            }
                         </Dropzone>
                     </Paper>
-                    <div>
-                        File: {fileNames.map(fileName => (
-                        <li key={fileName}>{fileName}</li>
-                    ))}
-
-                        <div>Preview:</div>
-                        {imageUrls.map(imageUrl => (
-                            <img alt={postTitle} key={imageUrl} src={imageUrl} width="100%" />
-                        ))}
-                    </div>
                     <Button type="submit" variant="contained" color="primary">
                         Post
-                </Button>
+                    </Button>
                 </form>
             </Paper >
         </div >
