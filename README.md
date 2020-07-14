@@ -26,3 +26,7 @@ Backend for app here: [Clackur-Backend](https://github.com/b-tsui/Clackur-App-Ba
 - [Front End Routes](https://github.com/b-tsui/Clack-App/blob/master/Documentation/frontEndRoutes.md)
 - [Back End Routes](https://github.com/b-tsui/Clack-App/blob/master/Documentation/backEndRoutes.md)
 - [Schema](https://github.com/b-tsui/Clackur-App/blob/master/Documentation/Clackur-Schema%20(4).png)
+
+## Production Deployment:
+
+- Frontend: git push heroku master
