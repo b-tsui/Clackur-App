@@ -29,7 +29,7 @@ const Home = () => {
     if (!user) {
         return (
             <>
-                {!loaded &&
+                {!loaded &
                     <Loading />
                 }
                 {loaded &&

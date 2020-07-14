@@ -116,7 +116,7 @@ export default function App() {
                     />
                     {/* dropzone component comes from react-dropzone
                 and allows client to drag/drop or upload an image to post */}
-                    <Paper className="drop-zone" color="secondary" className="MuiFormControl-root">
+                    <Paper className="drop-zone" color="secondary" >
                         <Dropzone onDrop={handleDrop} accept="image/*" >
                             {({ getRootProps,
                                 getInputProps,
