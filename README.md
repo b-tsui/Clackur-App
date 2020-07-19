@@ -1,5 +1,5 @@
 # Clackur
-Clackur is an image sharing app mechanical keyboard enthusiasts by keyboard enthusiasts.
+Clackur is an image sharing app for mechanical keyboard enthusiasts by keyboard enthusiasts.
 
 Check us out here: [Clackur](https://clackur.herokuapp.com)
 
