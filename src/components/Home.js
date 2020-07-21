@@ -42,7 +42,7 @@ const Home = () => {
   } else {
     return (
       <>
-        {!loaded & <Loading />}
+        {!loaded && <Loading />}
         {loaded && (
           <>
             <h1 className="home-welcome">Welcome to Clackur!</h1>
