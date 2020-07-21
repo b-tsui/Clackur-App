@@ -72,7 +72,7 @@ export default function SinglePostDetails({ location }) {
   const postD = useRef({});
 
   const classes = useStyles();
-  const { user, getTokenSilently } = useAuth0();
+  const { user, getTokenSilently, loginWithPopup } = useAuth0();
 
   //gets comment info
   useEffect(() => {
@@ -149,7 +149,7 @@ export default function SinglePostDetails({ location }) {
         setDownvoted(false);
       }
     } else {
-      return;
+      loginWithPopup();
     }
   };
   //handles downvoting
@@ -180,7 +180,7 @@ export default function SinglePostDetails({ location }) {
         setUpvoted(false);
       }
     } else {
-      return;
+      loginWithPopup();
     }
   };
 
