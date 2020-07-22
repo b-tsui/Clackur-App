@@ -43,7 +43,11 @@ export default function NavBar() {
                 />
                 &nbsp;lackur
               </a>
-              <a href="https://github.com/b-tsui" target="_blank">
+              <a
+                href="https://github.com/b-tsui"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <GitHubIcon />
               </a>
             </div>
