@@ -5,6 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
+import GitHubIcon from "@material-ui/icons/GitHub";
 
 import "../styles/navbar-styles.css";
 
@@ -32,7 +33,7 @@ export default function NavBar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            <div>
+            <div className="navbar-left">
               <a href="/" id="navbar-logo">
                 <img
                   alt="clackur logo"
@@ -41,6 +42,9 @@ export default function NavBar() {
                   width="40"
                 />
                 &nbsp;lackur
+              </a>
+              <a href="https://github.com/b-tsui" target="_blank">
+                <GitHubIcon />
               </a>
             </div>
           </Typography>
