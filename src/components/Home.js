@@ -4,11 +4,12 @@ import SinglePost from "./SinglePost";
 import "../styles/home-page.css";
 import Loading from "./Loading";
 import { api } from "../config";
+import Button from "@material-ui/core/Button";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const { user } = useAuth0();
+  const { user, loginWithRedirect } = useAuth0();
 
   useEffect(() => {
     setTimeout(() => {
@@ -56,9 +57,12 @@ const Home = () => {
                 signing up, or using the demo login!
               </div>
               <div>
-                To demo, login with email: <strong>demo@demo.com</strong>{" "}
-                password: <strong>aA1!demo</strong> or you can signup with any
-                email or google account!{" "}
+                <Button
+                  className="welcome-demo-button"
+                  onClick={() => loginWithRedirect({})}
+                >
+                  Log in / Demo
+                </Button>
               </div>
             </div>
             <div className="posts-container">
