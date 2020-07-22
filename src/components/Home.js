@@ -58,7 +58,7 @@ const Home = () => {
               </div>
               <div>
                 <Button
-                  className="welcome-demo-button"
+                  id="home-welcome-demo-button"
                   onClick={() => loginWithRedirect({})}
                 >
                   Log in / Demo
